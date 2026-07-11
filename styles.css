@@ -536,6 +536,8 @@ section {
 .movement-invite {
   background: var(--ink);
   color: var(--ivory);
+  position: relative;      /* containing block for its weave canvas */
+  isolation: isolate;      /* scope the canvas's negative z-index inside this section */
 }
 
 .invite-intro {
@@ -861,10 +863,16 @@ footer .foot-mark {
 .weave-canvas {
   position: absolute;
   inset: 0;
-  z-index: 1;                 /* above texture-bg + veil (auto), below hero content (z-index 2) */
+  z-index: 1;                 /* hero: above texture-bg + veil (auto), below hero content (z-index 2) */
   width: 100%;
   height: 100%;
   pointer-events: none;       /* never intercepts clicks — content & form stay fully interactive */
+}
+
+/* invitation section has no veil layer — sit the weave just above the ink
+   background and below all content, so text and the form read cleanly */
+.movement-invite .weave-canvas {
+  z-index: -1;
 }
 
 /* tuning affordance — kept active for now */
