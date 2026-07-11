@@ -875,18 +875,7 @@ footer .foot-mark {
   z-index: -1;
 }
 
-/* tuning affordance — kept active for now */
-.weave-hint {
-  position: fixed;
-  bottom: 14px;
-  left: 16px;
-  z-index: 200;
-  font: 10px/1.5 ui-monospace, Menlo, monospace;
-  letter-spacing: 0.04em;
-  color: rgba(246, 242, 234, 0.22);
-  pointer-events: none;
-}
-
+/* hidden tuning panel — opened with Cmd/Ctrl+D */
 .weave-panel {
   position: fixed;
   bottom: 14px;

@@ -253,8 +253,13 @@ document.querySelectorAll('.invite-feature').forEach((card) => {
 
   // ---- tuning panel (press D) ----
   const panel = document.getElementById('weave-panel');
+  // hidden tuning panel — open with Cmd+D (Mac) / Ctrl+D (Win/Linux);
+  // preventDefault stops the browser's bookmark dialog
   addEventListener('keydown', (e) => {
-    if ((e.key === 'd' || e.key === 'D') && panel) panel.classList.toggle('show');
+    if ((e.metaKey || e.ctrlKey) && (e.key === 'd' || e.key === 'D')) {
+      e.preventDefault();
+      if (panel) panel.classList.toggle('show');
+    }
   });
   const bind = (id, key, div, fmt) => {
     const el = document.getElementById(id);
