@@ -1,0 +1,903 @@
+/* ============================================================
+   Fuza by iTEX — quiet-luxury single page
+   Palette: ink charcoal, parchment ivory, brass accent
+   ============================================================ */
+
+@font-face {
+  font-family: 'Noto Serif SC';
+  src: local('Noto Serif SC');
+}
+
+:root {
+  --ink: #171513;
+  --ink-soft: #23201d;
+  --ivory: #f6f2ea;
+  --ivory-dim: #e9e2d4;
+  --stone: #a89a86;
+  --stone-dim: #6b6255;
+  --brass: #b08d57;
+  --brass-soft: #cbab78;
+  --line: rgba(246, 242, 234, 0.14);
+  --line-dark: rgba(23, 21, 19, 0.12);
+
+  --serif: 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', serif;
+  --sans: 'Neue Montreal', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: var(--sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; }
+
+a { color: inherit; }
+
+.cjk {
+  font-family: 'Noto Serif SC', 'Songti SC', 'PingFang SC', serif;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--brass-soft);
+  font-weight: 400;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 6vw;
+}
+
+/* ---------------- Nav ---------------- */
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.6rem 6vw;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+.nav * { pointer-events: auto; }
+
+.nav-mark {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  font-style: italic;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.4rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.nav-links a { text-decoration: none; opacity: 0.75; transition: opacity .3s; }
+.nav-links a:hover { opacity: 1; }
+
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+}
+
+/* ---------------- Reveal utility ---------------- */
+
+.reveal { will-change: transform, opacity; }
+
+/* ============================================================
+   MOVEMENT 1 — FUZA
+   ============================================================ */
+
+.movement-fuza {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: var(--ink);
+  overflow: hidden;
+  padding: 8rem 6vw 6rem;
+}
+
+.fuza-texture-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('images/fuza-hero-texture.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.16;
+  filter: saturate(0.7);
+}
+
+.fuza-texture-veil {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(23,21,19,0.45) 0%, rgba(23,21,19,0.92) 72%, var(--ink) 100%);
+}
+
+.fuza-hero-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fuza-eyebrow {
+  margin-bottom: 2.4rem;
+}
+
+.fuza-lockup {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+}
+
+.fuza-word {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(4.2rem, 13vw, 9.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  color: var(--ivory);
+}
+
+.fuza-hanzi {
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  color: var(--brass-soft);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+.fuza-tagline {
+  margin-top: 2.6rem;
+  max-width: 34ch;
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ivory-dim);
+}
+
+.fuza-sub {
+  margin-top: 1.8rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  color: var(--stone);
+  text-transform: uppercase;
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 2;
+  opacity: 0.6;
+}
+.scroll-cue-line {
+  width: 1px;
+  height: 42px;
+  background: linear-gradient(to bottom, var(--brass-soft), transparent);
+  animation: cue-fall 2.2s var(--ease) infinite;
+}
+@keyframes cue-fall {
+  0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+  40% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  60% { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+  100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+}
+.scroll-cue span {
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+
+/* ============================================================
+   SHARED SECTION SCAFFOLDING
+   ============================================================ */
+
+section {
+  position: relative;
+}
+
+.section-pad {
+  padding: 9rem 6vw;
+}
+
+@media (max-width: 720px) {
+  .section-pad { padding: 6rem 6vw; }
+}
+
+.section-head {
+  max-width: 640px;
+  margin: 0 auto 5rem;
+  text-align: center;
+}
+
+.section-head h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+  line-height: 1.15;
+  margin: 0.8rem 0 0;
+}
+
+/* ============================================================
+   MOVEMENT 2 — BUILT ON ITEX
+   ============================================================ */
+
+.movement-itex {
+  background: var(--ivory);
+  color: var(--ink);
+}
+
+.itex-transition {
+  position: relative;
+  height: 78vh;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--ink-soft);
+  overflow: hidden;
+}
+
+.itex-transition-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 70%;
+  opacity: 0.9;
+  filter: brightness(1.1) contrast(1.05);
+}
+
+/* fades the hero (ink) into the image at the top, and the image into the
+   ivory foundation at the bottom; the radial darkens behind the headline
+   so the ivory type keeps contrast against the pale sky */
+.itex-transition-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 92% 58% at 50% 48%, rgba(20,18,16,0.72) 0%, rgba(20,18,16,0.34) 55%, rgba(20,18,16,0.1) 82%),
+    linear-gradient(180deg, var(--ink) 0%, rgba(23,21,19,0.12) 24%, rgba(23,21,19,0.12) 66%, var(--ivory) 100%);
+}
+
+.itex-transition-inner {
+  position: relative;
+  z-index: 2;
+  padding: 0 6vw;
+}
+
+.itex-transition-inner .eyebrow {
+  color: var(--brass-soft);
+  text-shadow: 0 1px 24px rgba(12, 10, 9, 0.55);
+}
+
+.itex-transition h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  color: var(--ivory);
+  margin: 1rem 0 0;
+  line-height: 1.2;
+  text-shadow: 0 2px 34px rgba(12, 10, 9, 0.6);
+}
+
+.itex-transition h2 em {
+  color: var(--brass-soft);
+  font-style: italic;
+}
+
+/* --- scale story --- */
+
+.scale-story {
+  padding: 8rem 6vw 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.scale-story p {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 2.6vw, 1.85rem);
+  line-height: 1.65;
+  font-weight: 400;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.scale-story .est {
+  display: block;
+  margin-top: 1.6rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--stone-dim);
+}
+
+/* a quiet full-width pause — one line, generous dark space */
+.pause-line {
+  background: var(--ink);
+  padding: clamp(10rem, 22vh, 15rem) 6vw;
+  text-align: center;
+}
+
+.pause-line p {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 2.6vw, 1.85rem);
+  line-height: 1.65;
+  font-weight: 400;
+  color: var(--ivory);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  margin: 5.5rem 0;
+  background: var(--line-dark);
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.stat {
+  background: var(--ivory);
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.stat .num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  color: var(--ink);
+  display: block;
+  line-height: 1;
+}
+
+.stat .label {
+  display: block;
+  margin-top: 0.8rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stone-dim);
+}
+
+@media (max-width: 860px) {
+  .stat-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* --- cinematic imagery band --- */
+
+.image-band {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 2px;
+  background: var(--line-dark);
+}
+
+.image-band figure {
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+}
+
+.image-band.wide figure { aspect-ratio: 16/10; }
+
+.image-band img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.06);
+  transition: transform 1.4s var(--ease);
+}
+
+.image-band figure:hover img { transform: scale(1); }
+
+.image-band figcaption {
+  position: absolute;
+  left: 1.4rem;
+  bottom: 1.3rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  background: rgba(23,21,19,0.55);
+  padding: 0.4rem 0.8rem;
+}
+
+@media (max-width: 860px) {
+  .image-band { grid-template-columns: 1fr; }
+}
+
+/* full-width cinematic band — an architectural breath closing the iTEX story */
+.cinema-band {
+  margin: 2px 0 0;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 21/9;
+}
+
+.cinema-band img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.06);
+  transition: transform 1.8s var(--ease);
+  filter: brightness(0.96);
+}
+
+.cinema-band:hover img { transform: scale(1); }
+
+.cinema-band figcaption {
+  position: absolute;
+  left: 6vw;
+  bottom: 1.6rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  background: rgba(23,21,19,0.55);
+  padding: 0.4rem 0.8rem;
+}
+
+@media (max-width: 860px) {
+  .cinema-band { aspect-ratio: 16/9; }
+}
+
+/* --- clients + certifications --- */
+
+.trust-block {
+  padding: 7rem 6vw;
+  text-align: center;
+  background: var(--ivory-dim);
+}
+
+.trust-label {
+  margin-bottom: 2rem;
+}
+
+.brand-list {
+  display: flex;
+  justify-content: center;
+  gap: clamp(2rem, 6vw, 5rem);
+  flex-wrap: wrap;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--ink-soft);
+  margin-bottom: 5rem;
+}
+
+.cert-list {
+  display: flex;
+  justify-content: center;
+  gap: clamp(1.4rem, 4vw, 3rem);
+  flex-wrap: wrap;
+  padding-top: 3rem;
+  border-top: 1px solid var(--line-dark);
+}
+
+.cert {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stone-dim);
+  padding: 0.5rem 0;
+}
+
+/* ============================================================
+   MOVEMENT 3 — THE INVITATION
+   ============================================================ */
+
+.movement-invite {
+  background: var(--ink);
+  color: var(--ivory);
+}
+
+.invite-intro {
+  padding: 9rem 6vw 3rem;
+  text-align: center;
+}
+
+.invite-intro .section-head h2 { color: var(--ivory); }
+
+.invite-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2rem 6vw 6rem;
+}
+
+.invite-feature {
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  padding: 2.4rem 1.7rem 2.6rem;
+  border-radius: 3px;
+  background: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.invite-feature:focus-visible {
+  outline: 1px solid var(--brass-soft);
+  outline-offset: 0.4rem;
+}
+
+.invite-feature .mark {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 2.4rem;
+  color: var(--brass-soft);
+  display: block;
+  margin-bottom: 1.2rem;
+}
+
+.invite-feature h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.3rem;
+  margin: 0 0 0.8rem;
+}
+
+.invite-feature .feature-desc {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--stone);
+  margin: 0;
+}
+
+/* permanent affordance: a fine gold hairline with a + at its centre */
+.feature-affordance {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 1.5rem;
+}
+
+.feature-rule {
+  flex: 1;
+  height: 1px;
+  background: rgba(176, 141, 87, 0.4);
+  transition: background-color 0.3s ease;
+}
+
+.feature-glyph {
+  position: relative;
+  width: 11px;
+  height: 11px;
+  flex: none;
+}
+
+.feature-glyph::before,
+.feature-glyph::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: var(--brass-soft);
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.feature-glyph::before {   /* horizontal bar — always present */
+  width: 11px;
+  height: 1px;
+}
+
+.feature-glyph::after {    /* vertical bar — folds away to make a minus */
+  width: 1px;
+  height: 11px;
+}
+
+/* the detail unfolds below, additively — existing text never moves */
+.feature-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+  transition: grid-template-rows 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+}
+
+.feature-detail > p {
+  overflow: hidden;
+  min-height: 0;
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--ivory-dim);
+}
+
+/* shared open appearance — applied on hover (desktop) and .is-open (tap/keys) */
+.invite-feature.is-open {
+  background: #221c15;
+}
+
+.invite-feature.is-open .feature-rule {
+  background: var(--brass);
+}
+
+.invite-feature.is-open .feature-glyph::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.invite-feature.is-open .feature-detail {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 1.1rem;
+}
+
+@media (hover: hover) {
+  .invite-feature:hover {
+    background: #221c15;
+  }
+  .invite-feature:hover .feature-rule {
+    background: var(--brass);
+  }
+  .invite-feature:hover .feature-glyph::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  .invite-feature:hover .feature-detail {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    margin-top: 1.1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invite-feature,
+  .feature-rule,
+  .feature-glyph::before,
+  .feature-glyph::after,
+  .feature-detail {
+    transition-duration: 0.01ms;
+  }
+}
+
+@media (max-width: 780px) {
+  .invite-features { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+.atelier-band {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: rgba(246,242,234,0.08);
+}
+
+.atelier-band figure {
+  margin: 0;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  position: relative;
+}
+
+.atelier-band img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(0.92);
+}
+
+@media (max-width: 780px) {
+  .atelier-band { grid-template-columns: 1fr; }
+}
+
+/* --- enquiry form --- */
+
+.enquiry {
+  padding: 8rem 6vw 10rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.enquiry .section-head { margin-bottom: 4rem; }
+
+.field {
+  position: relative;
+  margin-bottom: 2.6rem;
+}
+
+.field label {
+  position: absolute;
+  left: 0;
+  top: 0.9rem;
+  font-size: 1rem;
+  color: var(--stone);
+  pointer-events: none;
+  transition: all 0.3s var(--ease);
+}
+
+.field input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  color: var(--ivory);
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  font-weight: 300;
+  padding: 0.9rem 0 0.7rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.field input:focus {
+  border-color: var(--brass-soft);
+}
+
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label {
+  top: -0.9rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brass-soft);
+}
+
+.submit-btn {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: none;
+  border: 1px solid var(--brass-soft);
+  color: var(--ivory);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  padding: 0.95rem 2.4rem;
+  cursor: pointer;
+  transition: background 0.35s var(--ease), color 0.35s var(--ease);
+}
+
+.submit-btn:hover {
+  background: var(--brass-soft);
+  color: var(--ink);
+}
+
+.submit-btn svg {
+  width: 16px; height: 16px;
+  transition: transform 0.35s var(--ease);
+}
+.submit-btn:hover svg { transform: translateX(4px); }
+
+.form-note {
+  margin-top: 1.4rem;
+  font-size: 0.78rem;
+  color: var(--stone-dim);
+}
+
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 3rem 0;
+}
+.form-success.show { display: block; }
+.form-success p:first-child {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.6rem;
+  color: var(--brass-soft);
+  margin-bottom: 0.6rem;
+}
+.form-success p:last-child {
+  color: var(--stone);
+  font-size: 0.95rem;
+}
+
+/* ---------------- Footer ---------------- */
+
+footer {
+  background: var(--ink);
+  color: var(--stone-dim);
+  padding: 3rem 6vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  border-top: 1px solid var(--line);
+}
+
+footer .foot-mark {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--stone);
+}
+
+@media (max-width: 720px) {
+  .container, .section-pad { padding-left: 7vw; padding-right: 7vw; }
+}
+
+/* ============================================================
+   Cursor-reactive woven-fabric hero background
+   ============================================================ */
+.weave-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;                 /* above texture-bg + veil (auto), below hero content (z-index 2) */
+  width: 100%;
+  height: 100%;
+  pointer-events: none;       /* never intercepts clicks — content & form stay fully interactive */
+}
+
+/* tuning affordance — kept active for now */
+.weave-hint {
+  position: fixed;
+  bottom: 14px;
+  left: 16px;
+  z-index: 200;
+  font: 10px/1.5 ui-monospace, Menlo, monospace;
+  letter-spacing: 0.04em;
+  color: rgba(246, 242, 234, 0.22);
+  pointer-events: none;
+}
+
+.weave-panel {
+  position: fixed;
+  bottom: 14px;
+  right: 16px;
+  z-index: 200;
+  display: none;
+  min-width: 230px;
+  padding: 12px 16px;
+  background: rgba(23, 21, 19, 0.9);
+  border: 1px solid rgba(246, 242, 234, 0.12);
+  font: 11px/1.9 ui-monospace, Menlo, monospace;
+  color: var(--stone);
+}
+.weave-panel.show { display: block; }
+.weave-panel label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+.weave-panel input[type="range"] { width: 110px; accent-color: var(--brass); }
+.weave-panel .val { min-width: 42px; text-align: right; color: var(--ivory); }
