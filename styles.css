@@ -875,26 +875,148 @@ footer .foot-mark {
   z-index: -1;
 }
 
-/* hidden tuning panel — opened with Cmd/Ctrl+D */
-.weave-panel {
-  position: fixed;
-  bottom: 14px;
-  right: 16px;
-  z-index: 200;
-  display: none;
-  min-width: 230px;
-  padding: 12px 16px;
-  background: rgba(23, 21, 19, 0.9);
-  border: 1px solid rgba(246, 242, 234, 0.12);
-  font: 11px/1.9 ui-monospace, Menlo, monospace;
+/* ============================================================
+   Sample room overlay — 3D garment inspector (opened from 室)
+   ============================================================ */
+.sr-overlay {
+  position: fixed; inset: 0; z-index: 400;
+  background: #141110;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.sr-overlay.open { opacity: 1; }
+.sr-overlay[hidden] { display: none; }
+
+.sr-stage { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
+.sr-stage.dragging { cursor: grabbing; }
+.sr-stage.focused { cursor: pointer; }
+
+.sr-vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 90% 80% at 50% 42%, transparent 40%, rgba(10,8,7,0.55) 100%);
+}
+
+.sr-brand { position: absolute; top: 28px; left: 34px; pointer-events: none; }
+.sr-mark { font-family: var(--serif); font-style: italic; font-size: 1.5rem; letter-spacing: 0.04em; color: var(--ivory); }
+.sr-mark .cjk { font-style: normal; color: var(--brass-soft); font-size: 0.8em; margin-left: 0.45em; }
+.sr-room {
+  margin-top: 0.5rem;
+  font-size: 0.62rem; letter-spacing: 0.32em; text-transform: uppercase;
   color: var(--stone);
 }
-.weave-panel.show { display: block; }
-.weave-panel label {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: space-between;
+
+.sr-close {
+  position: absolute; top: 28px; right: 34px; z-index: 5;
+  padding: 0.6rem 1.3rem;
+  background: rgba(21,18,16,0.8);
+  border: 1px solid rgba(246,242,234,0.22);
+  color: var(--ivory-dim);
+  font-family: var(--serif); font-style: italic; font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.4s ease;
 }
-.weave-panel input[type="range"] { width: 110px; accent-color: var(--brass); }
-.weave-panel .val { min-width: 42px; text-align: right; color: var(--ivory); }
+.sr-close:hover { border-color: var(--brass-soft); }
+
+.sr-hint {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+  pointer-events: none;
+  font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(246,242,234,0.34);
+  white-space: nowrap;
+  transition: opacity 0.9s ease;
+}
+.sr-hint.hidden { opacity: 0; }
+
+.sr-marker {
+  position: fixed; z-index: 410;
+  width: 30px; height: 30px; margin: -15px 0 0 -15px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+}
+.sr-marker .ring {
+  position: absolute; inset: 4px; border-radius: 50%;
+  border: 1px solid rgba(176,141,87,0.9);
+  box-shadow: 0 0 0 1px rgba(23,21,19,0.4), 0 0 10px rgba(23,21,19,0.35), inset 0 0 6px rgba(23,21,19,0.25);
+  transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), border-color 0.45s ease;
+}
+.sr-marker .dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--brass);
+  box-shadow: 0 0 0 1px rgba(23,21,19,0.45);
+  transition: transform 0.45s ease;
+}
+.sr-marker:hover .ring { transform: scale(1.35); border-color: var(--brass); }
+.sr-marker:hover .dot { transform: scale(1.6); }
+.sr-marker.away { opacity: 0.14; pointer-events: none; }
+.sr-marker.gone { opacity: 0; pointer-events: none; }
+
+.sr-callout {
+  position: absolute; right: 46px; top: 50%; transform: translateY(-50%) translateX(14px);
+  z-index: 5; max-width: 300px;
+  padding: 1.6rem 1.8rem 1.5rem;
+  background: rgba(21,18,16,0.86);
+  border: 1px solid rgba(246,242,234,0.10);
+  backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+.sr-callout.show { opacity: 1; transform: translateY(-50%) translateX(0); }
+.sr-co-eyebrow {
+  font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--brass-soft); margin-bottom: 0.8rem;
+}
+.sr-co-title {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: 1.45rem; line-height: 1.25; color: var(--ivory);
+  margin-bottom: 0.65rem;
+}
+.sr-co-sub { font-size: 0.82rem; line-height: 1.65; color: var(--stone); }
+
+.sr-back {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(8px);
+  z-index: 5;
+  padding: 0.65rem 1.5rem;
+  background: rgba(21,18,16,0.8);
+  border: 1px solid rgba(176,141,87,0.45);
+  color: var(--ivory-dim);
+  font-family: var(--serif); font-style: italic; font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  cursor: pointer; opacity: 0; pointer-events: none;
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1), border-color 0.4s ease;
+}
+.sr-back.show { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.sr-back:hover { border-color: var(--brass); }
+
+.sr-badge {
+  position: absolute; bottom: 14px; right: 16px; pointer-events: none;
+  font: 10px/1.5 ui-monospace, Menlo, monospace; letter-spacing: 0.05em;
+  color: rgba(246,242,234,0.30);
+}
+
+@media (max-width: 640px) {
+  .sr-callout { right: 18px; left: 18px; top: auto; bottom: 92px; max-width: none; transform: translateY(12px); }
+  .sr-callout.show { transform: translateY(0); }
+  .sr-brand { top: 20px; left: 20px; }
+  .sr-close { top: 20px; right: 20px; }
+}
+
+/* ============================================================
+   Closing signature — scroll-stitched wordmark
+   ============================================================ */
+.signature {
+  position: relative;
+  height: 240vh;
+  background: var(--ink);
+}
+.signature-stage {
+  position: sticky; top: 0;
+  height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.signature-stage svg {
+  width: min(780px, 84vw);
+  height: auto;
+}

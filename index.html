@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
 
@@ -170,7 +170,7 @@
         <p>Runs sized to your reality. Start small, scale when you&rsquo;re ready.</p>
       </div>
     </div>
-    <div class="invite-feature reveal" tabindex="0" role="button" aria-expanded="false">
+    <div class="invite-feature reveal" tabindex="0" role="button" aria-haspopup="dialog" data-opens="sample-room">
       <span class="mark cjk">室</span>
       <h3>Dedicated sampling room</h3>
       <p class="feature-desc">A studio set apart from mass production, where your ideas are patterned, tested, and refined by hand.</p>
@@ -241,20 +241,44 @@
 
 </section>
 
+<!-- ============================================================
+     CLOSING SIGNATURE — a single thread stitches the wordmark
+     ============================================================ -->
+<section class="signature" id="signature" aria-label="Fuza — stitched wordmark">
+  <div class="signature-stage">
+    <svg id="stitch-svg" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+  </div>
+</section>
+
 <footer>
   <div class="foot-mark">Fuza <span class="cjk">复杂</span> — by iTEX Garment</div>
   <div>Chongqing, China · Est. 2016</div>
 </footer>
 
-<!-- weave tuning panel — hidden; open with Cmd/Ctrl+D -->
-<div class="weave-panel" id="weave-panel">
-  <label>base weave <input type="range" id="weave-base" min="0" max="60" value="0"> <span class="val" id="weave-baseV">.000</span></label>
-  <label>sheen <input type="range" id="weave-sheen" min="0" max="150" value="150"> <span class="val" id="weave-sheenV">.150</span></label>
-  <label>radius <input type="range" id="weave-radius" min="80" max="520" value="292"> <span class="val" id="weave-radiusV">292</span></label>
+<!-- ============================================================
+     SAMPLE ROOM OVERLAY — opened from the 室 card; three.js and
+     the viewer load lazily on first open
+     ============================================================ -->
+<div class="sr-overlay" id="sample-room-overlay" role="dialog" aria-modal="true" aria-label="The sample room — 3D garment inspector" hidden>
+  <canvas class="sr-stage" id="sr-stage"></canvas>
+  <div class="sr-vignette" aria-hidden="true"></div>
+  <div class="sr-brand">
+    <div class="sr-mark">Fuza<span class="cjk">复杂</span></div>
+    <div class="sr-room">The sample room — concept</div>
+  </div>
+  <button class="sr-close" id="sr-close" type="button">Close &times;</button>
+  <div class="sr-hint" id="sr-hint">Drag to turn &nbsp;·&nbsp; select a brass point to inspect</div>
+  <div class="sr-callout" id="sr-callout" role="dialog" aria-live="polite">
+    <div class="sr-co-eyebrow" id="sr-co-eyebrow"></div>
+    <div class="sr-co-title" id="sr-co-title"></div>
+    <div class="sr-co-sub" id="sr-co-sub"></div>
+  </div>
+  <button class="sr-back" id="sr-back" type="button">&larr;&nbsp; Full garment</button>
+  <div class="sr-badge">PROTOTYPE — placeholder geometry, not actual iTEX samples</div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="script.js?v=6"></script>
+<script src="script.js?v=8"></script>
 </body>
 </html>
